@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
-import Header from "../components/Header";
 import PeopleList from '../components/PeopleList';
 import axios from "axios";
 export default class PeoplePage extends React.Component{
@@ -35,7 +34,6 @@ export default class PeoplePage extends React.Component{
     return (  
 
       <View>
-        <Header title="Pessoas" />
         <PeopleList people={this.state.people} />
       </View>
       
