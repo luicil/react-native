@@ -1,10 +1,11 @@
 import React from "react";
-import {ScrollView, Text, StyleSheet } from "react-native";
+import {FlatList, Text, StyleSheet } from "react-native";
 import PeopleListItem from "./PeopleListItem";
 
 const PeopleList = props =>{
     const {people, onPressItem} = props;
 
+/*
     const items = people.map(person =>
         <PeopleListItem
             key={person.login.uuid} 
@@ -12,11 +13,27 @@ const PeopleList = props =>{
             navigateToPeopleDetail={onPressItem}
         />
     );
+*/
 
     return (
+        <FlatList 
+            style={styles.container}
+            data={people}
+            renderItem={({ item }) =>(
+                <PeopleListItem
+                    //key={person.login.uuid} 
+                    people={item}
+                    navigateToPeopleDetail={onPressItem}
+                />
+            )}
+            keyExtractor={item => item.login.uuid}
+        />
+
+/*
         <ScrollView style={styles.container}>
             {items}
         </ScrollView>
+*/
     );
 };
 
