@@ -17,38 +17,58 @@ export default class PeoplePage extends React.Component{
 
   componentDidMount(){
 
-    setTimeout(() => {
+    //setTimeout(() => {
       this.setState({loading: true});
-      axios.get("https://randomuser.me/api?nat=br&results=15").then(
+      axios.get("https://randomuserERRO.me/api?nat=br&results=15").then(
         response =>{
           const { results } = response.data;
           this.setState({
             people: results,
             loading: false,
+            error: false,
           });
         }
-      ).catch(
-        response =>{
-          people: ["Falha no retorno da API."]
-        }
-      );
+      ).catch(error =>{
+        this.setState({error: true, loading: false});
+      });
         
-    }, 1500);
+    //}, 3500);
 
+  };
+
+  renderPage(){
+    if(this.state.loading){
+      return(<ActivityIndicator size="large" color="#6ca2f7"/>)  
+    } 
+    if(this.state.error){
+      return(<Text style={styles.error}>Ops... Algo deu errado ! =(</Text>)
+    }
+    return(
+      <PeopleList
+        people={this.state.people}
+        onPressItem={pageParams =>{
+        this.props.navigation.navigate("PeopleDetail", pageParams);
+      }} />
+    );
   };
 
   render(){
     return (  
-      <View>
-        <ActivityIndicator size="large" color="#6ca2f7"/>
-        <PeopleList
-          people={this.state.people}
-          onPressItem={pageParams =>{
-            this.props.navigation.navigate("PeopleDetail", pageParams);
-          }}
-        />
+      <View style={styles.container}>
+        {this.renderPage()}
       </View>
-      
     );  
   };
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  error: {
+    color: "red",
+    alignSelf: "center",
+    fontSize: 18,
+  }
+});
