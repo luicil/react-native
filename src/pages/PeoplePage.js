@@ -16,24 +16,19 @@ export default class PeoplePage extends React.Component{
   };
 
   componentDidMount(){
-
-    //setTimeout(() => {
-      this.setState({loading: true});
-      axios.get("https://randomuserERRO.me/api?nat=br&results=15").then(
-        response =>{
-          const { results } = response.data;
-          this.setState({
-            people: results,
-            loading: false,
-            error: false,
-          });
-        }
-      ).catch(error =>{
-        this.setState({error: true, loading: false});
-      });
-        
-    //}, 3500);
-
+    this.setState({loading: true});
+    axios.get("https://randomuserERRO.me/api?nat=br&results=15").then(
+      response =>{
+        const { results } = response.data;
+        this.setState({
+          people: results,
+          loading: false,
+          error: false,
+        });
+      }
+    ).catch(error =>{
+      this.setState({error: true, loading: false});
+    });
   };
 
   renderPage(){
